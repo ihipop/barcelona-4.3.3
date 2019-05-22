@@ -312,7 +312,7 @@ static struct workqueue_struct *my_workqueue;
 static void intrpt_routine(struct work_struct *unused);
 static void sata_led_routine(struct work_struct *ws);
 static DECLARE_DELAYED_WORK(btn_sched, intrpt_routine);
-static DECLARE_WORK(sata_work, sata_led_routine);
+static DECLARE_DELAYED_WORK(sata_work, sata_led_routine);
 
 static void intrpt_routine(struct work_struct *unused)
 {		
@@ -411,10 +411,10 @@ LED_STATUS
 		}
 	}
 
-	msleep(50);
+	//msleep(50);
 	// keep work routine queueing itself
 	if (!module_die)
-		queue_work(my_workqueue, &sata_work);
+		queue_delayed_work(my_workqueue, &sata_work,CONFIG_HZ / 1000 * 50);
 }
 
 // ----------------------------------------------------------
