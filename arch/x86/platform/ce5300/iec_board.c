@@ -684,6 +684,7 @@ static __exit void board_io_exit(void)
 	pm51_wdtset(0); //IEC-ADD by EDEN for kernel disable wdtSetWatchdog at 20151113
 	module_die = 1;                     // If cleanup wants us to die 
 	cancel_delayed_work(&btn_sched);    // no "new ones" 
+	cancel_delayed_work(&sata_work);
 	flush_workqueue(my_workqueue);      // wait till all "old ones" finished 
 	destroy_workqueue(my_workqueue);
 
