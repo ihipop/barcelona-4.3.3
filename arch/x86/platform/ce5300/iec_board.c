@@ -414,7 +414,7 @@ LED_STATUS
 	//msleep(50);
 	// keep work routine queueing itself
 	if (!module_die)
-		queue_delayed_work(my_workqueue, &sata_work,CONFIG_HZ / 1000 * 50);
+		queue_delayed_work(my_workqueue, &sata_work,CONFIG_HZ * 50 / 1000);
 }
 
 // ----------------------------------------------------------
@@ -643,7 +643,7 @@ static __init int board_io_init(void)
 	if (my_workqueue) {
 		queue_delayed_work(my_workqueue, &btn_sched, dyn_work_queue_timer);
 		// need a routine thread for SATA ACT_LED
-		queue_work(my_workqueue, &sata_work);
+		queue_delayed_work(my_workqueue, &sata_work,CONFIG_HZ * 50 / 1000);
 			
 		init_waitqueue_head(&board_event_queue);
 	} else {
